@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <!-- old UI -->
+    @*<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>@ViewData["Title"]</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="~/Assets/Plugins/fontawesome-free/css/all.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="~/Assets/Plugins/Ionicons/css/ionicons.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="~/Assets/Templates/Custom/AdminLTE/dist/css/AdminLTE.min.css">
+        <!-- Google Font -->
+        <link rel="stylesheet" href="~/Assets/Plugins/google-fonts/source_sans_pro/font.css">
+        <link rel="stylesheet" href="~/Assets/Plugins/google-fonts/open-sans/font.css">
+        <link rel="stylesheet" href="~/Assets/Plugins/google-fonts/archivo-narrow/font.css">
+        <link rel="stylesheet" href="~/Assets/Plugins/google-fonts/raleway/font.css">
+        <link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet" />
+        <link href="~/Assets/Templates/App/app.css" rel="stylesheet">*@
+    <!-- end old UI -->
+    <!-- new UI -->
+    <!-- Basic Page Needs
+        ================================================== -->
+    <meta charset="utf-8" />
+    <title>Index - Smartcares x Philips KL</title>
+
+    <!-- SEO Meta
+    ================================================== -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="distribution" content="global" />
+    <meta name="revisit-after" content="2 Days" />
+    <meta name="robots" content="ALL" />
+    <meta name="rating" content="8 YEARS" />
+    <meta name="Language" content="en-us" />
+    <meta name="GOOGLEBOT" content="NOARCHIVE" />
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- CSS
+    ================================================== -->
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- BOOTSTRAP STYLES-->
+    <link rel="stylesheet" href="~/asset/bootstrap/css/bootstrap.min.css" />
+    
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="~/asset/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png" />
+    <!--[if gte IE 9]>
+    <style type="text/css">
+    .gradient {
+    filter: none;
+    }
+    </style>-->
+    <!-- end new UI -->
+
+    @RenderSection("Styles", required: false)
+
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper" style=" overflow-x: hidden; ">
+
+        @if (ViewBag.ShowHeader == null || ViewBag.ShowHeader == true)
+        {
+                <partial name="Partials/HeaderPartial" />
+        }
+        <!--<partial name="Partials/SidebarPartial" />-->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="home-content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="main-content">
+
+                @if (!string.IsNullOrWhiteSpace(ViewBag.ContentHeader))
+                {
+                        <section class="content-header">
+                            <div class="container-fluid">
+                                <div class="row mb-2">
+                                    <div class="col-sm-12">
+                                        <h2>@ViewBag.ContentHeader</h2>
+                                    </div>
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+                }
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 p-0 m-0">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- /.content -->
+            </section>
+
+        </div>
+        <!-- /.content-wrapper -->
+        @if (ViewBag.ShowFooter == null || ViewBag.ShowFooter == true)
+        {
+                <partial name="Partials/FooterPartial" />
+        }
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+
+        <div class="modal fade" id="error-msg-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered custom-modal" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        @*<img src="~/Assets/Templates/App/img/error-msg-icon.png" class="img-responsive" />*@
+                        <h5 id="error-msg-body"></h5>
+                    </div>
+
+                    <div class="modal-footer text-center">
+                        <div class="modal-button">
+                            <button type="button" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- old UI -->
+    @*<!-- ./wrapper -->
+        <!-- jQuery -->
+        <script src="~/Assets/Plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="~/Assets/Plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/Assets/Templates/Custom/AdminLTE/dist/js/adminlte.min.js"></script>
+        <script type="text/javascript" src="~/Assets//Plugins/moment/moment.js"></script>
+        <script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+        <script src="~/Assets/Templates/App/app.js"></script>*@
+    <!-- end old UI -->
+    <!-- new UI -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- JQUERY SCRIPTS -->
+    <script src="~/asset/js/jquery.min.js"></script>
+    <script src="~/asset/bootstrap/js/bootstrap.min.js"></script>
+    <!-- js add -->
+    <script src="~/asset/js/custome.js"></script>
+    <!-- end new UI -->
+
+    @RenderSection("Scripts", required: false)
+
+    @if ((ViewBag.ShowHeader == null || ViewBag.ShowHeader == true) && (ViewBag.ShowDateTime == null || ViewBag.ShowDateTime == true))
+    {
+            <script>
+                $(document).ready(function () {
+                    'use strict';
+                    var interval = setInterval(function () {
+                        var momentNow = moment();
+                        $('#datetime-display').html('<i class="fa fa-calendar" aria-hidden="true" style="padding-right:10px;"></i>' + momentNow.format('DD/MM/YYYY') + '<br><i class="fa fa-clock" style="padding-right:10px;"></i>' + momentNow.format('hh:mm:ss A'));
+                    }, 100);
+                });
+            </script>
+    }
+
+    @if (ViewBag.RedirectToHome == null || ViewBag.RedirectToHome == true)
+    {
+
+            <script>
+                $(function () {
+                    'use strict';
+                    window.setTimeout(function () {
+                          window.location.href = '@Url.Action("Index", "Home")';
+                    }, 1000 * 60 * 0.1); // 5 minutes
+                });
+            </script>
+    }
+
+</body>
+</html>

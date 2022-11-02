@@ -1,0 +1,353 @@
+﻿@*@model SSKWeb.Models.ViewModels.PostRegisterCustomerInfoModel*@
+@{
+ViewData["Title"] = "Terms And Condition Page";
+
+}
+
+
+@section Styles{
+
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet" />*@
+
+<!-- jQuery & jQuery UI + theme (required) -->
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet">*@
+<!-- keyboard widget css & script (required) -->
+
+<link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+<link href="~/Assets/Plugins/multiselect/multi-select.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+
+<style>
+   .main-box {
+      top: 6%;
+   }
+
+   .ms-form fieldset .ms-form-card {
+      height: 95%;
+   }
+
+   .animate-form-group input {
+      height: 100% !important;
+      font-size: 45px !important;
+   }
+
+   .bootstrap-select>select {
+      /*  position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    display: block !important;
+                     width: 0.5px !important;
+                     height: 100% !important; */
+   }
+
+   .multi-select-button {
+      font-size: 3.5vw !important;
+      height: calc(7vw + 2px) !important;
+      text-align: center;
+   }
+
+   .invalid-feedback {
+      font-size: 35px;
+   }
+
+   .form-group {
+      padding-top: 30px;
+   }
+
+   /* .multi-select-button {
+                    display: inline-block;
+                    font-size: 0.875em;
+                    padding: 0.2em 0.6em;
+                    max-width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: -0.5em;
+                    background-color: #fff;
+                    border: 1px solid #aaa;
+                    border-radius: 4px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                    cursor: default;
+                }
+                    .multi-select-button:after {
+                        content: "";
+                        display: inline-block;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 0.4em 0.4em 0 0.4em;
+                        border-color: #999 transparent transparent transparent;
+                        margin-left: 0.4em;
+                        vertical-align: 0.1em;
+                    }
+            */
+   .multi-select-button {
+      white-space: nowrap;
+      overflow: hidden;
+   }
+
+   .multi-select-menu {
+      position: absolute;
+      left: 0;
+      top: 0.8em;
+      z-index: 1;
+      float: left;
+      min-width: 100%;
+      background: #fff;
+      margin: 3.5em 0;
+      border: 1px solid #aaa;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      display: none;
+   }
+
+   .multi-select-menuitem {
+      display: block;
+      font-size: 1.2em;
+      padding: 0.6em 1em 0.6em 30px;
+      white-space: nowrap;
+   }
+
+   .multi-select-menuitem input {
+      position: absolute;
+      margin-top: 0.25em;
+      margin-left: 700px;
+      width: 10%;
+   }
+
+   .multi-select-menuitem input[type=checkbox] {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(2);
+      /* IE */
+      -moz-transform: scale(2);
+      /* FF */
+      -webkit-transform: scale(2);
+      /* Safari and Chrome */
+      -o-transform: scale(2);
+      /* Opera */
+      transform: scale(2);
+      padding: 10px;
+   }
+
+   .bg-disabled {
+      background-color: #e9ecef;
+   }
+
+   a:hover,
+   a:active,
+   a:focus {
+      text-decoration: none;
+      color: #653f0f;
+   }
+
+   /*--------------------------------------------------------*/
+
+   .container {
+      display: block;
+      position: relative;
+      padding-left: 45px;
+      /*  margin-bottom: 2px; */
+      cursor: pointer;
+      font-size: 26px;
+              
+      
+   }
+
+   /* Hide the original checkbox */
+   input[type=checkbox] {
+      visibility: hidden;
+   }
+
+   /* creating a custom checkbox*/
+   .mark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 33px;
+      width: 33px;
+      background-color: white;
+          border: 2px solid #84C547;
+   }
+
+   /*background color to be shown when hovering over checkbox */
+   .container:hover input~.mark {
+      background-color: white;
+   }
+
+   /*background color to be shown when the checkbox is checked */
+   .container input:checked~.mark {
+    /*  background-color: #84c547;*/
+        background-image: url("/asset/images/tick.png");
+            background-size: cover;
+   }
+
+   /* checkmark to be shown in checkbox */
+   /* It will not be shown when unchecked */
+   .mark:after {
+      content: "";
+      position: absolute;
+      display: none;
+   }
+
+   /* display checkmark when checked */
+   .container input:checked~.mark:after {
+      display: block;
+   }
+
+   /* creating a square to be the sign of 
+                checkmark */
+   .container .mark:after {
+      left: 6px;
+      bottom: 6px;
+      width: 6px;
+      height: 6px;
+      /* border: solid white; */
+      border-width: 4px 4px 4px 4px;
+   }
+</style>
+}
+
+
+@section Scripts{
+<script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+<script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+<script src="~/Assets/Plugins/multiselect/multi-select.js"></script>
+<script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+<script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+<script src="~/Assets/Templates/App/app.js"></script>
+
+<script>
+   $(function() {
+
+      'use strict';
+      var link = '';
+      let isChecked = $('#agreeTermAndCondition')
+      console.log(isChecked.is(':checked'));
+      //Initial Error
+      var errorNotAgree = $('#errorNotAgree');
+
+      //Clear Error Default
+      errorNotAgree.html("");
+
+
+      $(document).on("click", "#goToNextPage", function() {
+         console.log(isChecked.is(':checked'));
+         if (isChecked.is(':checked')) {
+
+            errorNotAgree.html("");
+
+            $(function() {
+
+               'use strict';
+
+               (async function() {
+
+                  $.LoadingOverlay("show");
+                  //Controller Call
+                  $.get("@Url.Action("CreateJog", "Lenovo")",
+                        function(data, status) {
+
+                           console.log(data);
+
+                           if (data["url"]) {
+                              window.location.href = data["url"];
+                           }
+
+                        })
+                     .fail(function(data) {
+
+                        //Error Handler
+                        var json = data.responseJSON;
+                        console.log(json);
+
+                     }).always(function() {
+                        $.LoadingOverlay("hide");
+                     });;
+
+               })();
+
+            });
+
+         } else {
+            errorNotAgree.css("color", "red");
+            errorNotAgree.css("font-size", "25px");
+            errorNotAgree.html("Please indicate that you accept the Terms and Conditions");
+
+         }
+      });
+
+   });
+</script>
+
+}
+
+<!-- new UI-->
+
+<div class="page-content">
+   <div class="content">
+      <div class="main-box">
+         <div class="container-fluid">
+            <div class="row justify-content-center mt-0">
+               <div class="col-md-11 text-center p-0 mt-3 mb-2">
+                  <div class="ms-card px-0 pt-4 pb-0 mt-3 mb-3">
+                     <div class="ms-card-header">
+                        <span class="ms-card-header-title">Terms and Conditions</span>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12 mx-0">
+                           <form class="ms-form">
+                              <fieldset>
+                                 <div class="ms-form-card " style="font-size:30px">
+
+                                    <div class="text-left">
+                                       <h2 class="ms-fs-title">PDPA Consent Clause</h2>
+                                       <div class="row p-2">
+                                          <span>By Submitting this Form, you hereby agree that R Logic International Pte Ltd (SmartCares) may collect, obtain, store and process your personal
+                                             data that you provide in this form for the purpose of carrying out the requested services by R Logic International Pte Ltd (SmartCares).</span>
+                                       </div>
+                                       <div class="row p-2">
+                                          <span>You hereby give your consent to R Logic International Pte Ltd (SmartCares) to : </span>
+                                          <ol>
+                                             <li>Access your personal information to establish your identity and background such as your full name, email and contact number</li>
+                                             <li>Store and process your personal data.</li>
+                                             <li>Record all calls made between you and R-Logic (SmartCares). For the avoidance of doubt, Personal Data includes all data defined within the "Personal Data Protection Act” including all data you had disclosed to R Logic International Pte Ltd (SmartCares) in this Form.</li>
+                                          </ol>
+                                       </div>
+
+                                       <div class="row p-2">
+                                          <span>For any enquiries, please contact us at <strong>lenovo@smartcares.com</strong> or <strong>+6568714838</strong>. </span>
+                                       </div>
+                                    </div>
+                                    <div class="row p-2 text-left">
+                                       <div class="form-check">
+                                          <label class="container">
+                                             I understand and agree to the "Terms and Use" stated above.
+                                             <input type="checkbox" id="agreeTermAndCondition">
+                                             <span class="mark"></span>
+                                             <span id="errorNotAgree"></span>
+                                          </label>
+                                          <div>
+
+                                          </div>
+                                       </div>
+
+                                    </div>
+
+
+                                 </div>
+                                         <input type="button" id="goToNextPage" class="next action-button goToNextPage" style=" background: #84C547;" value="Next" />
+                              </fieldset>
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

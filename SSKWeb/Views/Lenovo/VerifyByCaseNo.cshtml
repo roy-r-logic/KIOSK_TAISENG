@@ -1,0 +1,265 @@
+﻿@*
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+ViewData["Title"] = "Verify By Case No";
+
+}
+@section Styles{
+
+<link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+<link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+    <link href="~/asset/css/custom.css" rel="stylesheet" />
+<style>
+   .btn-float-container {
+      position: fixed;
+      width: 200px;
+      height: 60px;
+      bottom: 40px;
+      left: 40px;
+   }
+
+   .btn-float-content {
+      background-color: #84C547;
+      border-radius: 20px;
+      box-shadow: 2px 2px 3px #999;
+      margin-top: 15px;
+      font-size: 20px;
+      text-align: center;
+      color: #FFF;
+   }
+
+       .invalid-feedback {
+          font-size: 35px;
+       }
+</style>
+}
+
+@section Scripts{
+<script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+<script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+<script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+<script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+<script src="~/Assets/Templates/App/app.js"></script>
+
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      console.log("start");
+      ReadScanner();
+
+      var link = '';
+      const d = new Date();
+      let year = d.getFullYear();
+      var jobTagDefault = $('#jobTagDefault');
+      jobTagDefault.html("SGLV" + year);
+
+      $(document).on("click", "#submit", function() {
+
+         $(function() {
+
+            'use strict';
+
+            (async function() {
+
+               $.LoadingOverlay("show");
+               //Initial Data
+               var jobTag = $('#JobTag').val();
+               var page = "/Lenovo/JobInfo";
+               console.log(jobTagDefault.text() + jobTag);
+
+               //Initial Error
+               var errorJobTag = $('#errorJobTag');
+
+               //Clear Error Default
+               errorJobTag.html("");
+
+
+               //Controller Call
+               $.get("@Url.Action("GetJogInfo", "Lenovo")?jobTag=" + jobTagDefault.text() + jobTag + "&page=" + page,
+                     function(data, status) {
+                        console.log(data);
+                        if (data["url"]) {
+                           window.location.href = data["url"];
+                        }
+                        if (data['isExists'] == false) {
+                           errorJobTag.html("This Case Number is Not Found.");
+                        }
+                     })
+                  .fail(function(data) {
+
+                     //Error Handler
+                     var json = data.responseJSON;
+                     console.log(json);
+
+                     // if (json.hasOwnProperty("Model")) {
+                     //     errorModelNo.html(json["Model"]);
+                     // }
+
+                  }).always(function() {
+                     $.LoadingOverlay("hide");
+                  });;
+
+            })();
+
+         });
+      });
+   });
+
+
+   function ReadScanner() {
+      var retryAttempt = 0;
+      (async function Scanner() {
+         if (CefSharp.IsObjectCached("qrScanningChromiumObject") === false) {
+            await CefSharp.BindObjectAsync("qrScanningChromiumObject", "bound");
+         }
+         qrScanningChromiumObject.scan().then(function(data) {
+            var page = "/Lenovo/JobInfo";
+            console.log(data);
+            $.get("@Url.Action("GetJogInfo", "Lenovo")?jobTag=" + data + "&page=" + page,
+                  function(data, status) {
+                     if (data["url"]) {
+                        window.location.href = data["url"];
+                     }else{
+                         window.location.href = "/Lenovo/VerifyByCaseNo";
+                     }
+                  }).done(function() {
+
+               })
+               .fail(function(data) {
+                         window.location.href = "/Lenovo/VerifyByCaseNo";
+                  //Error Handler
+                  //var json = data.responseJSON;
+                  //console.log(json);
+
+                  //if (json.hasOwnProperty("Model")) {
+                  //    errorModelNo.html(json["Model"]);
+                  //}
+
+                  //if (json.hasOwnProperty("Model_1")) {
+                  //    errorModelNo.html(json["Model_1"]);
+                  //}
+
+                  //if (json.hasOwnProperty("Model_2")) {
+                  //    errorModelNo.html(json["Model_2"]);
+                  //}
+
+                  //if (json["Contact"]) {
+                  //    errorContact.html(json["Contact"]);
+                  //}
+
+                  //retryAttempt++;
+                  //console.log("retry attempt : " + retryAttempt);
+                  //if (retryAttempt != 10) {
+                  //   Scanner();
+                  //}
+
+                  //if (retryAttempt == 10) {
+
+                  //   var options = {
+                  //      closeButton: false,
+                  //      debug: false,
+                  //      newestOnTop: false,
+                  //      progressBar: false,
+                  //      positionClass: "toast-top-full-width",
+                  //      preventDuplicates: false,
+                  //      onclick: null,
+                  //      showDuration: "0",
+                  //      hideDuration: "0",
+                  //      timeOut: "0",
+                  //      extendedTimeOut: "0",
+                  //      showEasing: "swing",
+                  //      hideEasing: "linear",
+                  //      showMethod: "fadeIn",
+                  //      hideMethod: "fadeOut"
+                  //   };
+                  //   toastr.warning('Message', "You have tried seral times that cause failed, please try again..", options);
+                  //   window.setTimeout(function() {
+                  //      window.location.href = '@Url.Action("Index", "Home")';
+                  //   }, 1000 * 60 * 0.1);  6 seconds
+                  //}
+
+               });
+         });
+
+      })();
+   }
+</script>
+}
+
+
+<div class="page-content">
+   <div class="content">
+      @*<div class="main-box">*@
+         <div>
+            <div class="container">
+               <div class="box-smartcares">
+                  <div class="container">
+                     <div class="row">
+                        <div class="col-md-12">
+                           <div class="main-box-reader">
+                              <div class="box-reader">
+                                 <h1 class="reader-text"><span class="text-bold text-dark">Scan QR Code</span><br> from your email </h1>
+                                 <br />
+                                 <figure class="text-center">
+                                    <img class="img-fluid  ml-lg-5" src="~/asset/images/qr_scan.png" width="220" height="210" alt="">
+                                 </figure>
+
+                              </div>
+
+                           </div>
+                        </div>
+                        <div class="col-md-12 text-center pt-lg-3">
+                           <h1 class="reader-text"><span class="text-bold text-dark">OR</span> </h1>
+
+                        </div>
+
+                        <div class="col-md-12 mb-lg-n5 pt-lg-1">
+                           <div class="main-box-reader">
+                              <div class="box-reader">
+                                 <div class="form-group">
+                                    <div class="reader-text pb-5 text-left">
+                                       <span class="text-dark">Enter your Case Number : </span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-5 text-right">
+                                          <h1 class="reader-text">
+                                             <span class="text-bold text-dark" id="jobTagDefault"></span>
+                                          </h1>
+                                       </div>
+                                       <div class="col-sm-6"><input id="JobTag" @*value="AC4064" *@ class="form-control number" maxlength="5" placeholder="04004" type="text"></div>
+                                       <div class="col-sm-12">
+                                              <div class="invalid-feedback text-center pt-5">
+                                             <span id="errorJobTag"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                    <div class="box-topup text-center mt-2 d-flex justify-content-center">
+                                       <button type="submit" id="submit" class="btn-Retry btn-md text-white w-50 ml-4 btn-yes mt-5"><strong>Check</strong></button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+   <div class="btn-float-container">
+      <div class="row">
+         <div class="col-4">
+            <img src="/asset/images/arrow_down.gif" class="img-fluid">
+         </div>
+         <div class="col-8 p-0">
+            <div class="btn-float-content p-2">
+               <strong>Scan QR Code here</strong>
+            </div>
+         </div>
+      </div>
+   </div>

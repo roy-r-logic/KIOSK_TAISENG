@@ -1,0 +1,353 @@
+﻿@*@model SSKWeb.Models.ViewModels.PostRegisterCustomerInfoModel*@
+@{
+ViewData["Title"] = "Customer Register";
+
+}
+
+
+@section Styles{
+
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet" />*@
+
+<!-- jQuery & jQuery UI + theme (required) -->
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet">*@
+<!-- keyboard widget css & script (required) -->
+
+<link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+<link href="~/Assets/Plugins/multiselect/multi-select.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+<link href="~/asset/css/custom.css" rel="stylesheet" />
+<style>
+   .main-box {
+      top: 6%;
+   }
+
+   .ms-form fieldset .ms-form-card {
+      height: 95%;
+   }
+
+   .animate-form-group input {
+      height: 100% !important;
+      font-size: 45px !important;
+   }
+
+   .bootstrap-select>select {
+      /*  position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    display: block !important;
+                     width: 0.5px !important;
+                     height: 100% !important; */
+   }
+
+   .multi-select-button {
+      font-size: 3.5vw !important;
+      height: calc(7vw + 2px) !important;
+      text-align: center;
+   }
+
+   .invalid-feedback {
+      font-size: 35px;
+   }
+
+   .form-group {
+      padding-top: 30px;
+   }
+
+   /* .multi-select-button {
+                    display: inline-block;
+                    font-size: 0.875em;
+                    padding: 0.2em 0.6em;
+                    max-width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: -0.5em;
+                    background-color: #fff;
+                    border: 1px solid #aaa;
+                    border-radius: 4px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                    cursor: default;
+                }
+                    .multi-select-button:after {
+                        content: "";
+                        display: inline-block;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 0.4em 0.4em 0 0.4em;
+                        border-color: #999 transparent transparent transparent;
+                        margin-left: 0.4em;
+                        vertical-align: 0.1em;
+                    }
+            */
+   .multi-select-button {
+      white-space: nowrap;
+      overflow: hidden;
+   }
+
+   .multi-select-menu {
+      position: absolute;
+      left: 0;
+      top: 0.8em;
+      z-index: 1;
+      float: left;
+      min-width: 100%;
+      background: #fff;
+      margin: 3.5em 0;
+      border: 1px solid #aaa;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      display: none;
+   }
+
+   .multi-select-menuitem {
+      display: block;
+      font-size: 1.2em;
+      padding: 0.6em 1em 0.6em 30px;
+      white-space: nowrap;
+   }
+
+   .multi-select-menuitem input {
+      position: absolute;
+      margin-top: 0.25em;
+      margin-left: 700px;
+      width: 10%;
+   }
+
+   .multi-select-menuitem input[type=checkbox] {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(2);
+      /* IE */
+      -moz-transform: scale(2);
+      /* FF */
+      -webkit-transform: scale(2);
+      /* Safari and Chrome */
+      -o-transform: scale(2);
+      /* Opera */
+      transform: scale(2);
+      padding: 10px;
+   }
+
+   .bg-disabled {
+      background-color: #e9ecef;
+   }
+       .goToNextPage {
+        background: #84C547;
+    }
+
+   a:hover,
+   a:active,
+   a:focus {
+      text-decoration: none;
+      color: #653f0f;
+   }
+</style>
+}
+@{
+var a = "@";
+}
+@section Scripts{
+<script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+<script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+<script src="~/Assets/Plugins/multiselect/multi-select.js"></script>
+<script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+<script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+<script src="~/Assets/Templates/App/app.js"></script>
+
+<script>
+   $(function() {
+
+      'use strict';
+      var link = '';
+
+      $(document).on("click", "#goToNextPage", function() {
+
+         $(function() {
+
+            'use strict';
+
+            (async function() {
+
+               $.LoadingOverlay("show");
+               //Initial Data
+               var CustomerName = $('#txtCustomerName').val();
+               var CustomerPhoneNumber = $('#txtCustomerPhoneNumber').val();
+               var CustomerEmail = $('#txtCustomerEmail').val() + "@a" + $('#txtEmail').val();
+                   console.log($('#txtCustomerEmail').val());
+
+                       //Initial Error
+                   var errorCustomerName = $('#errorCustomerName');
+                   var errorCustomerPhoneNumber = $('#errorCustomerPhoneNumber');
+                   var errorCustomerEmail = $('#errorCustomerEmail');
+
+                   //Clear Error Default
+                   errorCustomerName.html("");
+                   errorCustomerPhoneNumber.html("");
+                   errorCustomerEmail.html("");
+
+                       if($('#txtCustomerEmail').val() == "" || $('#txtEmail').val()==""){
+                           CustomerEmail="";
+                       }
+
+                           
+                           
+               
+
+
+               //Controller Call
+               $.get("@Url.Action("SaveCustomerInfo", "Lenovo")?customerName=" + CustomerName + "&customerPhoneNumber=" + CustomerPhoneNumber + "&customerEmail=" + CustomerEmail,
+                     function(data, status) {
+
+                               var validLetter = ["8","9"];
+                               var firstLetter = CustomerPhoneNumber.slice(0,1);
+
+                               if(validLetter.indexOf(firstLetter) == -1){
+                                  errorCustomerPhoneNumber.html("Invalid contact format,first number must be 8 or 9");
+                                      $.LoadingOverlay("hide");
+                               }else{
+                                    if (data["url"]) {
+                                        window.location.href = data["url"];
+                                    } 
+                               }                  
+
+                     })
+                  .fail(function(data) {
+
+                     //Error Handler
+                     var json = data.responseJSON;
+                     console.log(json);
+
+                     if (json.hasOwnProperty("customerName")) {
+                        errorCustomerName.html(json["customerName"]);
+                     }
+                     if (json.hasOwnProperty("customerEmail")) {
+                        errorCustomerEmail.html(json["customerEmail"]);
+                     }
+                     if (json.hasOwnProperty("customerPhoneNumber")) {
+                        errorCustomerPhoneNumber.html(json["customerPhoneNumber"]);
+                     }
+
+                  }).always(function() {
+                     $.LoadingOverlay("hide");
+                  });
+
+                  
+
+            })();
+
+         });
+      });
+
+   });
+</script>
+
+}
+
+
+
+    
+<!-- new UI-->
+
+<div class="page-content">
+   <div class="content">
+      <div class="main-box">
+         <div class="container-fluid">
+            <div class="row justify-content-center mt-0">
+               <div class="col-md-11 text-center p-0 mt-3 mb-2">
+                  <div class="ms-card px-0 pt-4 pb-0 mt-3 mb-3">
+                     <div class="ms-card-header">
+                        <span class="ms-card-header-title">Register your Lenovo product</span>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12 mx-0">
+                           <form class="ms-form">
+                              <fieldset>
+                                 <div class="ms-form-card">
+                                    <div class="reader-text pb-5 text-center">
+                                       <span class="text-dark">1) Customer Information</span>
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                       <div class="col-6">
+                                          <div class="reader-text pb-5 text-right">
+                                             <span class="text-dark">Serial Number :</span>
+                                             <span class="text-dark">Warranty Type :</span>
+                                          </div>
+                                       </div>
+                                       <div class="col-6 ">
+                                          <div class="reader-text pb-5 text-left">
+                                             <span class="text-dark">@Model.Serial</span><br />
+
+                                             @if (@Model.InWarranty == true)
+                                             {
+                                             <span class="text-dark">In Warranty</span>
+                                             }
+                                             else if (@Model.InWarranty == false)
+                                             {
+                                             <span class="text-dark">Out of Warranty</span>
+                                             }
+                                          </div>
+                                       </div>
+                                    </div>
+
+
+
+                                    <div class="reader-text pb-8 text-left">
+                                       <span class="text-dark">Full Name as per NRIC* : </span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-12"><input id="txtCustomerName" required @*value="AC4064" *@ class="form-control alpha" type="text" placeholder="E.g. Alex">
+
+
+                                       </div>
+                                       <div class="col-sm-12 pb-8">
+                                          <div class="invalid-feedback">
+                                             <span id="errorCustomerName"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="reader-text pb-8 text-left">
+                                       <span class="text-dark">Phone Number* : </span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-12"><input id="txtCustomerPhoneNumber" required @*value="0170000001" *@ class="form-control number" type="text" placeholder="E.g. 88998899"></div>
+                                       <div class="col-sm-12">
+                                          <div class="invalid-feedback">
+                                             <span id="errorCustomerPhoneNumber"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="reader-text pb-8 text-left">
+                                       <span class="text-dark">Email* : </span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-6"><input id="txtCustomerEmail" required @*value="AC4064" *@ class="form-control alpha-numeric" type="text" placeholder="E.g. alex"></div>
+                                       <div class="col-sm-1 reader-text text-center"><span class="text-dark">@a</span> </div>
+                                       <div class="col-sm-5"><input id="txtEmail" required @*value="AC4064" *@ class="form-control alpha-numeric" type="text" placeholder="E.g. gmail.com"></div>
+                                       <div class="col-sm-12">
+                                          <div class="invalid-feedback">
+                                             <span id="errorCustomerEmail"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <input type="button" id="goToNextPage" class="next action-button goToNextPage" style=" background: #84C547;" value="Next" />
+                              </fieldset>
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

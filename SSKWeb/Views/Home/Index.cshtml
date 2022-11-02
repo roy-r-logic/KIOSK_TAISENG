@@ -1,0 +1,154 @@
+﻿@{
+ViewData["Title"] = "Home";
+// ViewBag.ShowFooter = false;
+// ViewBag.ShowHeader = false;
+ViewBag.ShowDateTime = true;
+// ViewBag.RedirectToHome = false;
+Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+@section Scripts{
+<script type="text/javascript">
+    //$(".slideshow > div:gt(0)").hide();
+    //setInterval(function () {
+    //    $('.slideshow > div:first')
+    //        .fadeOut(1000)
+    //        .next()
+    //        .fadeIn(1000)
+    //        .end()
+    //        .appendTo('.slideshow');
+    //}, 3000);
+    $(function() {
+        'use strict';
+        $(document).on("click", "#slideshow", function() {
+            $(function() {
+                'use strict';
+                (async function() {
+                    //var _self = $('#slideshow');
+                    //var isShowing = _self.hasClass('d-show');
+                    //console.log(isShowing);
+                    //if (isShowing) {
+                    //    _self.removeClass("d-show");
+                    //    _self.addClass("d-none");
+                    //}
+                    window.location.href = "@Url.Action("SelectAction", "Lenovo")";
+                })();
+            });
+        });
+        $(document).on("click", "#start", function() {
+            $(function() {
+                'use strict';
+                (async function() {
+                    window.location.href = "@Url.Action("SelectAction", "Lenovo")";
+                })();
+            });
+        });
+        $(function() {
+            'use strict';
+            window.setInterval(function() {
+                var slideShow = $('#slideshow');
+                var slideShow_isShowing = slideShow.hasClass("d-show");
+                if (!slideShow_isShowing) {
+                    slideShow.removeClass("d-none");
+                    slideShow.addClass("d-show");
+                }
+                //console.log(1);
+            }, 1000 * 60 * 5); // 5 minutes
+        });
+    });
+</script>
+}
+
+@section Styles{
+<style>
+    .slideshow {
+        margin: 50px auto;
+        /*position: relative;*/
+        width: 240px;
+        height: 240px;
+        padding: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .slideshow>div {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .slideshow-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .img-btn {
+        width: 420px;
+        height: 420px;
+        border: none;
+        background: white;
+        display: inline-block;
+        text-align: center;
+        line-height: 150px;
+        border-radius: 320px;
+        border: 5px solid #84C547;
+     /*   -webkit-box-shadow: 0px 13px 40px 0px rgba(0, 0, 0, 0.26);
+        -moz-box-shadow: 0px 13px 40px 0px rgba(0, 0, 0, 0.26);
+        box-shadow: 0px 13px 40px 0px rgba(0, 0, 0, 0.26);*/
+    }
+</style>
+
+}
+
+<!-- new UI -->
+<div class="page-content">
+    <div class="content">
+        <div>
+            <div class="container">
+                <div class="box-smartcares">
+                    <div class="container">
+                        <div class="row">
+                                <div class="col-md-12 pb-1" style="margin-bottom:200px">
+
+                            </div>
+                            <div class="col-md-12 mb-lg-n5 pt-lg-5">
+                                <div class="main-box-reader">
+                                                <h1 class="reader-text text-center" style="font-size:150px;font-weight: 900;"><strong>Welcome</strong></h1>
+                                        <div class="home-box-reader">
+                                                <h1 class="reader-text text-center" style="font-size:50px;">Select Your Service</h1>
+                                        <!--<div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                                <a onclick="window.location.href='@Url.Action("SelectSearchType", "Lenovo")';" class="btn-Retry w-50 ml-4 btn-yes text-white"><strong>Send In Device</strong></a>
+                                                                                        </div>
+                                            <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                                    <a onclick="window.location.href='@Url.Action("VerifyByCaseNo", "Lenovo")';" class="btn-Retry w-50 ml-4 btn-yes text-white"><strong>Collection</strong></a>
+                                            </div>-->
+                                               <!--          <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                                            <a onclick="window.location.href='@Url.Action("PrintLabel", "Lenovo")';" class="btn-Retry w-50 ml-4 btn-yes text-white"><strong>Print Test</strong></a>
+                                                        </div>-->
+                                        <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                            <button class="img-btn" onclick="window.location.href='@Url.Action("SelectSearchType", "Lenovo" )';">
+                                                <img src="/asset/images/send-in.png" class="img-fluid" width="200" alt="">
+                                                <h1 style="font-size:50px"><strong>Send In <br />Device</strong></h1></button>
+                                        </div>
+                                        <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                            <button class="img-btn" onclick="window.location.href='@Url.Action("VerifyByCaseNo", "Lenovo" )';">
+                                                <img src="/asset/images/collection.png" class="img-fluid" width="200" alt="">
+                                                    <h1 style="font-size:50px"><strong>Collection</strong></h1></button>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

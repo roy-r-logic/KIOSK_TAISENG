@@ -1,0 +1,200 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Scan QR Code";
+
+}
+@section Styles{
+
+    <link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+
+    <style>
+        .btn-float-container {
+            position: fixed;
+            width: 200px;
+            height: 60px;
+            bottom: 40px;
+            left: 40px;
+        }
+
+        .btn-float-content {
+            background-color: #84C547;
+            border-radius: 20px;
+            box-shadow: 2px 2px 3px #999;
+            margin-top: 15px;
+            font-size: 20px;
+            text-align: center;
+            color: #FFF;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            ReadScanner();
+        });
+
+
+        function ReadScanner() {
+            var retryAttempt = 0;
+            (async function Scanner() {
+                if (CefSharp.IsObjectCached("qrScanningChromiumObject") === false) {
+                    await CefSharp.BindObjectAsync("qrScanningChromiumObject", "bound");
+                }
+
+                qrScanningChromiumObject.scan().then(function (data) {
+                           var page = "/Lenovo/PrintLabel";
+                        
+                           $.get("@Url.Action("GetJogInfo", "Lenovo")?jobTag=" + data +"&page=" + page, function (data, status) {
+                               console.log("scan");
+                             if (data["url"]) {
+                                    window.location.href = "/Lenovo/PrintLabel";
+                             }else{
+                                        window.location.href = "/Lenovo/ScanQRCode";
+                             }
+                    }).done(function () {
+                       
+                    })
+                            .fail(function (data) {
+                                     window.location.href = "/Lenovo/ScanQRCode";
+                                //Error Handler
+                                //var json = data.responseJSON;
+                                //console.log(json);
+
+                                //if (json.hasOwnProperty("Model")) {
+                                //    errorModelNo.html(json["Model"]);
+                                //}
+
+                                //if (json.hasOwnProperty("Model_1")) {
+                                //    errorModelNo.html(json["Model_1"]);
+                                //}
+
+                                //if (json.hasOwnProperty("Model_2")) {
+                                //    errorModelNo.html(json["Model_2"]);
+                                //}
+
+                                //if (json["Contact"]) {
+                                //    errorContact.html(json["Contact"]);
+                                //}
+
+                                //retryAttempt++;
+                                //console.log("retry attempt : " + retryAttempt);
+                                //if (retryAttempt != 10) {
+                                //    Scanner();
+                                //}
+
+                                //if (retryAttempt == 10) {
+
+                                //    var options = {
+                                //        closeButton: false,
+                                //        debug: false,
+                                //        newestOnTop: false,
+                                //        progressBar: false,
+                                //        positionClass: "toast-top-full-width",
+                                //        preventDuplicates: false,
+                                //        onclick: null,
+                                //        showDuration: "0",
+                                //        hideDuration: "0",
+                                //        timeOut: "0",
+                                //        extendedTimeOut: "0",
+                                //        showEasing: "swing",
+                                //        hideEasing: "linear",
+                                //        showMethod: "fadeIn",
+                                //        hideMethod: "fadeOut"
+                                //    };
+                                //    toastr.warning('Message', "You have tried seral times that cause failed, please try again..", options);
+                                //    window.setTimeout(function () {
+                                //       window.location.href = '@Url.Action("Index", "Home")';
+                                //    }, 1000 * 60 * 0.1);  6 seconds
+                                //}
+
+                            });
+                });
+
+            })();
+        }
+
+    </script>
+}
+
+
+<div class="page-content">
+    <div class="content">
+        @*<div class="main-box">*@
+        <div>
+            <div class="container">
+                <div class="box-smartcares">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="main-box-reader">
+                                    <div class="box-reader">
+                                                <h1 class="reader-text"><span class="text-bold text-dark">Scan QR Code<br/> from your email & app</span> </h1>
+                                        @*   <h1 class="reader-text">Please present your QR code <br>Thank you. </h1>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card_reader-image">
+                                    <figure class="text-center">
+                                        <img class="img-fluid w-50 h-50 ml-lg-5" src="~/asset/images/qr_scan.png" alt="">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="btn-float-container">
+    <div class="row">
+        <div class="col-4">
+            <img src="/asset/images/arrow_down.gif" class="img-fluid">
+        </div>
+        <div class="col-8 p-0">
+            <div class="btn-float-content p-2">
+                <strong>Scan QR Code here</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="box-smartcares">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="main-box-reader">
+                        <div class="box-reader">
+                            <h1 class="reader-text">Please present your QR code <br>Thank you. </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card_payment-image">
+                        <figure class="text-center">
+                            <img class="img-fluid w-50 h-50 ml-lg-5" src="~/asset/images/qr_scan.png" alt="">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-float-container">
+            <div class="row">
+                <div class="col-4">
+                    <img src="/asset/images/arrow_down.gif" class="img-fluid">
+                </div>
+                <div class="col-6 p-0">
+                    <div class="btn-float-content p-2">
+                        <strong>Scan QR Code here</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@

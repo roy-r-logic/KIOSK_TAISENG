@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Select Search Type";
+}
+
+
+
+
+<!-- new UI-->
+
+<div class="page-content">
+    <div class="content">
+        @*<div class="main-box">*@
+        <div>
+            <div class="container">
+                <div class="box-smartcares">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card_reader-image">
+                                    <figure class="text-center">
+
+                                        <img src="~/asset/images/register-icon.png" class="img-fluid" width="800" alt="">
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-lg-n5 pt-lg-5">
+                                <div class="main-box-reader">
+                                    <div class="box-reader">
+                                        @*   <h1 class="reader-text">Have you registered from <br>our smartcares website?</h1>*@
+                                        <h1 class="reader-text">Do You have a QR Code from <br /> SmartCares App or Website?</h1>
+                                        <div class="box-topup text-center mt-5 d-flex justify-content-between">
+                                            <a onclick="window.location.href='@Url.Action("VerifyBySerialNo", "Lenovo")';" class="btn-Retry w-50 mr-4 text-white"><strong>No</strong></a>
+                                            <a onclick="window.location.href='@Url.Action("ScanQRCode", "Lenovo")';" class="btn-Retry w-50 ml-4 btn-yes text-white "><strong>Yes</strong></a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

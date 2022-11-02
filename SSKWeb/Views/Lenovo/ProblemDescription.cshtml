@@ -1,0 +1,387 @@
+﻿@*@model SSKWeb.Models.ViewModels.ProblemDescriptionModel*@
+@{
+ViewData["Title"] = "Problem Description";
+
+}
+
+
+@section Styles{
+
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet" />*@
+
+<!-- jQuery & jQuery UI + theme (required) -->
+@*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet">*@
+<!-- keyboard widget css & script (required) -->
+
+<link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+<link href="~/Assets/Plugins/multiselect/multi-select.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="~/Assets/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+    <link href="~/asset/css/custom.css" rel="stylesheet" />
+<style>
+   .main-box {
+      top: 6%;
+   }
+
+   .ms-form fieldset .ms-form-card {
+      height: 100%;
+   }
+
+   .animate-form-group input {
+      height: 100% !important;
+      font-size: 45px !important;
+   }
+
+   .bootstrap-select>select {
+      /*  position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    display: block !important;
+                     width: 0.5px !important;
+                     height: 100% !important; */
+   }
+
+   .multi-select-button {
+      font-size: 3.5vw !important;
+      height: calc(7vw + 2px) !important;
+      text-align: center;
+   }
+
+   .invalid-feedback {
+      font-size: 35px;
+   }
+
+   .form-group {
+      padding-top: 30px;
+   }
+
+   /* .multi-select-button {
+                    display: inline-block;
+                    font-size: 0.875em;
+                    padding: 0.2em 0.6em;
+                    max-width: 100%;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: -0.5em;
+                    background-color: #fff;
+                    border: 1px solid #aaa;
+                    border-radius: 4px;
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                    cursor: default;
+                }
+                    .multi-select-button:after {
+                        content: "";
+                        display: inline-block;
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 0.4em 0.4em 0 0.4em;
+                        border-color: #999 transparent transparent transparent;
+                        margin-left: 0.4em;
+                        vertical-align: 0.1em;
+                    }
+            */
+   .multi-select-button {
+      white-space: nowrap;
+      overflow: hidden;
+   }
+
+   .multi-select-menu {
+      position: absolute;
+      left: 0;
+      top: 0.8em;
+      z-index: 1;
+      float: left;
+      min-width: 100%;
+      background: #fff;
+      margin: 3.5em 0;
+      border: 1px solid #aaa;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      display: none;
+   }
+
+   .multi-select-menuitem {
+      display: block;
+      font-size: 1.2em;
+      padding: 0.6em 1em 0.6em 30px;
+      white-space: nowrap;
+   }
+
+   .multi-select-menuitem input {
+      position: absolute;
+      margin-top: 0.25em;
+      margin-left: 700px;
+      width: 10%;
+   }
+
+   .multi-select-menuitem input[type=checkbox] {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(2);
+      /* IE */
+      -moz-transform: scale(2);
+      /* FF */
+      -webkit-transform: scale(2);
+      /* Safari and Chrome */
+      -o-transform: scale(2);
+      /* Opera */
+      transform: scale(2);
+      padding: 10px;
+   }
+
+   .bg-disabled {
+      background-color: #e9ecef;
+   }
+
+   a:hover,
+   a:active,
+   a:focus {
+      text-decoration: none;
+      color: #653f0f;
+   }
+
+   .select {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 880px;
+      gap: 1px;
+   }
+
+   .select__item {
+      margin-bottom: 10px;
+      /*   margin-right:30px;*/
+      padding-top: 25px;
+      padding-bottom: 25px;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 95%;
+      hight: 95%;
+      cursor: pointer;
+      font-family: "Heebo", sans-serif;
+      text-align: center;
+      border-radius: 7px;
+      border: 1px solid #84c547;
+      background: white;
+      transition: background 0.1s;
+      font-size: 33px;
+      font-weight: 750;
+      line-height: 35px;
+      vertical-align: bottom;
+   }
+
+   .select__item--selected {
+      background: #84c547;
+      color: #ffffff;
+   }
+</style>
+}
+
+
+@section Scripts{
+<script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+<script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+<script src="~/Assets/Plugins/multiselect/multi-select.js"></script>
+<script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+<script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+<script src="~/Assets/Templates/App/app.js"></script>
+
+<script>
+   $(function() {
+
+      'use strict';
+      var link = '';
+      //   $("#goToNextPage").hide();
+
+
+      $(document).on("click", "#goToNextPage", function() {
+
+         $(function() {
+
+            'use strict';
+
+            (async function() {
+
+               $.LoadingOverlay("show");
+               //Initial Data
+               var selectedProblemDescriptions = $('#selectedProblemDescriptions').val();
+               var otherProblemDescription = $('#txtOtherProblemDescription').val();
+               console.log(selectedProblemDescriptions);
+
+               //Initial Error
+               var errorProblemDescription = $('#errorProblemDescription');
+
+               //Clear Error Default
+               errorProblemDescription.html("");
+
+
+               //Controller Call
+               $.get("@Url.Action("SaveProblemDescription", "Lenovo")?problemDescriptions=" + selectedProblemDescriptions + "&otherProblemDescription=" + otherProblemDescription,
+                     function(data, status) {
+
+                        console.log(data);
+                        if (data["url"]) {
+                           window.location.href = data["url"];
+                        }
+                     })
+                  .fail(function(data) {
+
+                     //Error Handler
+                     var json = data.responseJSON;
+                     console.log(json);
+
+                     if (json.hasOwnProperty("problemDescription")) {
+                        errorProblemDescription.html(json["problemDescription"]);
+                     }
+
+                  }).always(function() {
+                     $.LoadingOverlay("hide");
+                  });
+
+            })();
+
+         });
+      });
+
+   });
+</script>
+
+<script>
+   class CustomSelect {
+      constructor(originalSelect) {
+         this.originalSelect = originalSelect;
+         this.customSelect = document.createElement("div");
+         this.customSelect.classList.add("select");
+
+         this.originalSelect.querySelectorAll("option").forEach((optionElement) => {
+            const itemElement = document.createElement("div");
+
+            itemElement.classList.add("select__item");
+            itemElement.textContent = optionElement.textContent;
+            this.customSelect.appendChild(itemElement);
+
+            if (optionElement.selected) {
+               this._select(itemElement);
+            }
+
+            itemElement.addEventListener("click", () => {
+               if (
+                  this.originalSelect.multiple &&
+                  itemElement.classList.contains("select__item--selected")
+               ) {
+                  this._deselect(itemElement);
+               } else {
+                  this._select(itemElement);
+               }
+            });
+         });
+
+         this.originalSelect.insertAdjacentElement("afterend", this.customSelect);
+         this.originalSelect.style.display = "none";
+      }
+
+      _select(itemElement) {
+         const index = Array.from(this.customSelect.children).indexOf(itemElement);
+
+         if (!this.originalSelect.multiple) {
+            this.customSelect.querySelectorAll(".select__item").forEach((el) => {
+               el.classList.remove("select__item--selected");
+            });
+         }
+
+         this.originalSelect.querySelectorAll("option")[index].selected = true;
+         itemElement.classList.add("select__item--selected");
+      }
+
+      _deselect(itemElement) {
+         const index = Array.from(this.customSelect.children).indexOf(itemElement);
+
+         this.originalSelect.querySelectorAll("option")[index].selected = false;
+         itemElement.classList.remove("select__item--selected");
+      }
+   }
+
+   document.querySelectorAll(".custom-select").forEach((selectElement) => {
+      new CustomSelect(selectElement);
+   });
+</script>
+
+}
+
+<!-- new UI-->
+
+<div class="page-content">
+   <div class="content">
+      <div class="main-box">
+         <div class="container-fluid">
+            <div class="row justify-content-center mt-0">
+               <div class="col-md-11 text-center p-0 mt-3 mb-2">
+                  <div class="ms-card px-0 pt-4 pb-0 mt-3 mb-3">
+                     <div class="ms-card-header">
+                        <span class="ms-card-header-title">Register your Lenovo product</span>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12 mx-0">
+                           <form class="ms-form">
+                              </ul>
+                              <!-- fieldsets -->
+                              <fieldset>
+                                 <div class="ms-form-card">
+                                    <div class="reader-text pb-5 text-center">
+                                       <span class="text-dark">2) Problem Description*<br />
+                                          <small class="text-muted">(multiple selection available)</small> : </span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-12">
+                                          <select name="language" id="selectedProblemDescriptions" class="custom-select" multiple>
+                                             @if (Model.ProblemDescriptions != null)
+                                             {
+                                             @foreach (var item in Model.ProblemDescriptions)
+                                             {
+                                             <p>{@item.productDesc}</p>
+                                             <option value="@item.productDesc">@item.productDesc</option>
+
+
+                                             }
+
+                                             }
+                                          </select>
+                                       </div>
+                                       <div class="col-sm-12">
+                                          <div class="invalid-feedback">
+                                             <span id="errorCustomerName"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                    <div class="reader-text pb-5 text-left">
+                                       <span class="text-dark">Describe your issue (if any):</span>
+                                    </div>
+                                    <div class="row">
+                                       <div class="col-sm-12"><input id="txtOtherProblemDescription" @*value="AC4064" *@ class="form-control alpha" type="text" value=" "></div>
+                                       <div class="col-sm-12">
+                                          <div class="invalid-feedback">
+                                             <span id="errorProblemDescription"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+
+                                 </div>
+                                 <input type="button" id="goToNextPage" name="next" class="next action-button goToNextPage" style=" background: #84C547;" value="Next" />
+                              </fieldset>
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+</div>

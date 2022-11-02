@@ -1,0 +1,224 @@
+﻿@model SSKWeb.Models.ViewModels.ResultJobViewModel
+@{
+    ViewData["Title"] = "Job Info";
+    Layout = "~/Views/Shared/_GoToHomePageLayout.cshtml";
+}
+
+
+@section Styles{
+
+    @*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet" />*@
+
+    <!-- jQuery & jQuery UI + theme (required) -->
+    @*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet">*@
+    <!-- keyboard widget css & script (required) -->
+
+    <link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+    <link href="~/Assets/Plugins/multiselect/multi-select.css" rel="stylesheet" />
+    <link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/Assets/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+       
+    <style>
+       .main-box {
+          top: 20%;
+       }
+
+       .ms-form fieldset .ms-form-card {
+          height: 50%;
+       }
+
+       .animate-form-group input {
+          height: 100% !important;
+          font-size: 45px !important;
+       }
+
+       .bootstrap-select>select {
+          /*  position: absolute;
+                                bottom: 0;
+                                left: 50%;
+                                display: block !important;
+                                 width: 0.5px !important;
+                                 height: 100% !important; */
+       }
+
+       .multi-select-button {
+          font-size: 3.5vw !important;
+          height: calc(7vw + 2px) !important;
+          text-align: center;
+       }
+
+       .invalid-feedback {
+          font-size: 35px;
+       }
+
+       .form-group {
+          padding-top: 30px;
+       }
+
+       /* .multi-select-button {
+                                display: inline-block;
+                                font-size: 0.875em;
+                                padding: 0.2em 0.6em;
+                                max-width: 100%;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                vertical-align: -0.5em;
+                                background-color: #fff;
+                                border: 1px solid #aaa;
+                                border-radius: 4px;
+                                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                                cursor: default;
+                            }
+                                .multi-select-button:after {
+                                    content: "";
+                                    display: inline-block;
+                                    width: 0;
+                                    height: 0;
+                                    border-style: solid;
+                                    border-width: 0.4em 0.4em 0 0.4em;
+                                    border-color: #999 transparent transparent transparent;
+                                    margin-left: 0.4em;
+                                    vertical-align: 0.1em;
+                                }
+                        */
+       .multi-select-button {
+          white-space: nowrap;
+          overflow: hidden;
+       }
+
+       .multi-select-menu {
+          position: absolute;
+          left: 0;
+          top: 0.8em;
+          z-index: 1;
+          float: left;
+          min-width: 100%;
+          background: #fff;
+          margin: 3.5em 0;
+          border: 1px solid #aaa;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+          display: none;
+       }
+
+       .multi-select-menuitem {
+          display: block;
+          font-size: 1.2em;
+          padding: 0.6em 1em 0.6em 30px;
+          white-space: nowrap;
+       }
+
+       .multi-select-menuitem input {
+          position: absolute;
+          margin-top: 0.25em;
+          margin-left: 700px;
+          width: 10%;
+       }
+
+       .multi-select-menuitem input[type=checkbox] {
+          /* Double-sized Checkboxes */
+          -ms-transform: scale(2);
+          /* IE */
+          -moz-transform: scale(2);
+          /* FF */
+          -webkit-transform: scale(2);
+          /* Safari and Chrome */
+          -o-transform: scale(2);
+          /* Opera */
+          transform: scale(2);
+          padding: 10px;
+       }
+
+       .bg-disabled {
+          background-color: #e9ecef;
+       }
+
+       a:hover,
+       a:active,
+       a:focus {
+          text-decoration: none;
+          color: #653f0f;
+       }
+
+       input[type="text"]:disabled {
+          background-color: white;
+       }
+
+       .cardHeader{
+           border: 5px solid #84C547;
+       }
+    </style>
+}
+
+
+    @section Scripts{
+    <script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+    <script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+    <script src="~/Assets/Plugins/multiselect/multi-select.js"></script>
+    <script src="~/Assets/Plugins/toastr/toastr.min.js"></script>
+    <script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+    <script src="~/Assets/Templates/App/app.js"></script>
+
+    <script>
+
+    </script>
+
+}
+
+    <!-- new UI-->
+
+    <div class="page-content">
+       <div class="content">
+          <div class="main-box">
+             <div class="container-fluid">
+                <div class="row justify-content-center mt-0">
+                   <div class="col-md-11 text-center p-0 mt-3 mb-2">
+                      <div class="ms-card px-0 pt-4 pb-0 mt-3 mb-3">
+                         <div class="ms-card-header">
+                            <span class="ms-card-header-title">Job Info</span>
+                         </div>
+                         <div class="row">
+                            <div class="col-md-12 mx-0">
+                               <form class="ms-form">
+                                  <fieldset>
+                                         <div class=" cardHeader" style="border: 5px solid #84C547;margin-top:30px">
+
+                                            
+
+                                               
+                                                              <div class="reader-text pb-5 text-center" style="padding-top:50px;padding-bottom:50px;padding-left:20px;padding-right:20px">
+                                                            @if (Model.statusId == 12)
+                                                            {
+                                                         <h1 style="color:#84C547;font-size:60px;" >Please be patient, we will serve you shortly.</h1>
+                                                            }
+                                                            else
+                                                            {
+                                                             <h1 style="color:#84C547;font-size:60px;">We’re sorry to inform that your device is <strong>still under repair</strong>. We’ll be contacting you once it’s ready.
+    </h1>
+                                                            }
+                                                  </div>
+                                              
+                                          
+
+                                            <div style="border: 5px solid #84C547;background:#84C547;padding-top:50px;padding-bottom:50px">
+                                                <h1 style="color:white;font-size:60px;font-weight: 700;">Case Number : @Model.jobTag</h1>
+                                            </div>
+
+                                           </div>
+                                           
+
+                              </fieldset>
+
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

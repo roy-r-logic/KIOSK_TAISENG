@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Out Warranty Confirm Repair";
+}
+
+
+
+
+<!-- new UI-->
+
+<div class="page-content">
+    <div class="content">
+        @*<div class="main-box">*@
+        <div>
+            <div class="container">
+                <div class="box-smartcares">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card_reader-image">
+                                    <!--<figure class="text-center">
+
+                                        <img src="~/asset/images/register_icon.png" class="img-fluid" alt="">
+                                    </figure>-->
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-lg-n5 pt-lg-5">
+                                <div class="main-box-reader">
+                                    <div class="box-reader">
+                                        @*   <h1 class="reader-text">Have you registered from <br>our smartcares website?</h1>*@
+                                        <h1 class="reader-text">Upfront Diagnostic Fee Deposit:</h1>
+                                        <h1 class="reader-text" style="color:#84c547">SGD 74.90 (Inclusive GST)</h1>
+                                        <br />
+                                        <h1 class="reader-text">Do You Agree to proceed repair with the above diagnose fee?</h1>
+                                        <div class="box-topup text-center mt-5 d-flex justify-content-between">
+                                            <a onclick="window.location.href='@Url.Action("ThankYouPage", "Lenovo")';" class="btn-Retry w-50 mr-4 text-white"><strong>No</strong></a>
+                                            <a onclick="window.location.href='@Url.Action("RegisterCustomer", "Lenovo")';" class="btn-Retry w-50 ml-4 btn-yes text-white "><strong>Yes</strong></a>
+                                        </div>
+
+                                        <p class="reader-text text-left mt-5" style="font-size:30px">*NOTE: Deposit will be <span style='color:#84c547'>WAIVED</span> in the final payment if you agree to proceed repair with is after diagnostic; <span style='color:#84c547'>Not Refundable</span> if you not agree to proceed.</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

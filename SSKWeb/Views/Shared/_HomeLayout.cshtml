@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- new UI -->
+    <!-- Basic Page Needs
+        ================================================== -->
+    <meta charset="utf-8" />
+    <title>Index - Smartcares x Lenovo</title>
+    <!-- SEO Meta
+    ================================================== -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="distribution" content="global" />
+    <meta name="revisit-after" content="2 Days" />
+    <meta name="robots" content="ALL" />
+    <meta name="rating" content="8 YEARS" />
+    <meta name="Language" content="en-us" />
+    <meta name="GOOGLEBOT" content="NOARCHIVE" />
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- CSS
+    ================================================== -->
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- BOOTSTRAP STYLES-->
+    <link rel="stylesheet" href="~/asset/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/asset/css/custom.css" />
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Favicons
+    ================================================== -->
+    @* <link rel="shortcut icon" href="~/asset/images/favicon.ico" type="image/x-icon" />*@
+    <link rel="apple-touch-icon" href="~/asset/images/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/asset/images/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/asset/images/apple-touch-icon-114x114.png" />
+
+    <!-- end new UI -->
+
+    @RenderSection("Styles", required: false)
+
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-footer-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        @*<partial name="Partials/SidebarPartial" />*@
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="main-content">
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12" style="padding-right: 0;padding-left: 0;">
+                                <div class="header-area boll-bg p-0">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12 p-0">
+                                                <div class="box-topheader">
+                                                    <div class=" d-flex justify-content-between">
+                                                        <div class="box-logo">
+                                                            <a class="main-logo" href="@Url.Action("Index", "Home")">
+                                                                <img class="img-fluid" src="~/asset/images/header_logo_icon.png" />
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="box-main-datetime">
+                                                            <div class="box-time-date text-center">
+                                                                <h1 class="box-date" id="datetime-display"></h1>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @RenderBody()
+                                @if (ViewBag.ShowHomeButton == null || ViewBag.ShowHomeButton == true)
+                                {
+                                        <div class="box-back-call">
+                                            <div class="container">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-md-1">
+                                                        <div class="box-buttton d-flex justify-content-center">
+                                                            <div class="page-back ">
+                                                               <!-- <button id="btnHome" class="round-button">
+                                                                    <img src="/asset/images/home.png" class="img-fluid" alt="">
+                                                                </button>-->
+                                                                    <!--    <button id="btnHome" class="round-button">
+                                                                                  <img src="/asset/images/backBtn.png" class="img-fluid" alt="">
+                                                                    </button>-->
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </section>
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="homeModalCenter" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="homeModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title box-title" id="homeModalLongTitle">Cancel Application</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="reader-text">
+                        Your application is under process, would you like to cancel?
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-Retry w-50 mr-4" data-dismiss="modal">No</button>
+                    <button type="button" class="btn-Retry w-50 ml-4 btn-yes" onclick="window.location.href='@Url.Action("Index", "Home")'">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="extendTimerModalCenter" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static" aria-labelledby="extendTimerModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title box-title" id="extendTimerModalLongTitle">Timer Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="reader-text">
+                        Ops, it takes too long to apply...  <br /> Do you need more time?
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-Retry w-50 mr-4" onclick="window.location.href='@Url.Action("Index", "Home")'" data-dismiss="modal">No</button>
+                    <button type="button" class="btn-Retry w-50 ml-4 btn-yes" id="btnExtendTimer">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- new UI -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- JQUERY SCRIPTS -->
+    <script src="~/asset/js/jquery.min.js"></script>
+
+    <script src="~/asset/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- js add -->
+    <script src="~/asset/js/custome.js"></script>
+    <!-- old things-->
+    <script type="text/javascript" src="~/Assets//Plugins/moment/moment.js"></script>
+    @RenderSection("Scripts", required: false)
+     <script>
+            $(document).ready(function () {
+                'use strict';
+                var interval = setInterval(function () {
+                    var momentNow = moment();
+                    $('#datetime-display').html('<i class="fa fa-calendar-alt" aria-hidden="true" style="padding-right:10px;"></i><span style="font-weight:700">' + momentNow.format('DD/MM/YYYY') + '</span><br><i class="fa fa-clock" style="padding-right:10px;"></i><span style="font-weight:700">' + momentNow.format('hh:mm:ss A') + '</span>');
+                }, 100);
+
+            });
+        </script>
+    
+
+             <script>
+                    $(function () {
+
+                        'use strict';
+
+                        $(document).on("click", "#btnHome", function () {
+
+                            $(function () {
+                                     history.back();
+
+                            });
+
+                        });
+
+                    });
+                </script>
+
+
+
+
+</body>
+</html>
+

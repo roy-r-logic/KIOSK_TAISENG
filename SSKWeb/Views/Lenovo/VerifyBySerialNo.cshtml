@@ -1,0 +1,165 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Verify By Serial No";
+
+}
+
+
+@section Styles{
+
+        <link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+        <link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+}
+
+
+
+    @section Scripts{
+    @*<script src="~/Assets/Plugins/keyboard/js/jquery-latest-slim.min.js"></script>*@
+        <script src="~/Assets/Plugins/keyboard/js/jquery-ui-custom.min.js"></script>
+        <script src="~/Assets/Plugins/keyboard/js/jquery.keyboard.js"></script>
+        <script src="~/Assets/Plugins/jquery-loading-overlay-2.1.7/dist/loadingoverlay.min.js"></script>
+        <script src="~/Assets/Templates/App/app.js"></script>
+    @*<script src="~/asset/js/jquery.js"></script>*@
+        <script>
+            $(function () {
+
+                'use strict';
+                var link = '';
+                        $("#goToNextPage").hide();
+
+
+                $(document).on("click", "#submit", function () {
+
+                    $(function () {
+
+                        'use strict';
+
+                        (async function () {
+
+                            $.LoadingOverlay("show");
+                            //Initial Data
+                            var serialNo = $('#SerialNo').val();
+                           console.log(serialNo);
+
+                            //Initial Error
+                            var errorSerialNo = $('#errorSerialNo');
+
+                            //Clear Error Default
+                            errorSerialNo.html("");
+
+                            //Controller Call
+                                $.get("@Url.Action("GetRepairInfoBySerial", "Lenovo")?serialNo=" + serialNo, function (data, status) {
+
+                                                if(data["inWarranty"] == true){
+                                                          errorSerialNo.html("Your device is <span style='color:#84c547'>In Warranty</span>");
+                                                      link = data["url"];
+                                                }else if(data["inWarranty"] == false){
+                                                          errorSerialNo.html("Your device is <span style='color:#84c547'>Out of Warranty</span> ");
+                                                      link = data["url"];
+                                                }
+
+                                                    console.log(link);
+                                                            $("#submit").hide();
+                                                            $("#goToNextPage").show();
+                                                            $("SerialNo").prop('disabled', true);
+
+                            })
+                                .fail(function (data) {
+
+                                    //Error Handler
+                                    var json = data.responseJSON;
+                                    console.log(json);
+
+                                        if (json.hasOwnProperty("errorMessage")) {
+                                                    errorSerialNo.html("<span style='color:red'>Invalid serial number, please approach to our customer service.</span> ");
+                                    }
+
+                                }).always(function () {
+                                    $.LoadingOverlay("hide");
+                                });;
+
+                        })();
+
+                    });
+                });
+
+
+                $(document).on("click", "#goToNextPage", function () {
+                        console.log(link)
+                        window.location.href = link;
+                 });
+            });
+
+
+
+
+        </script>
+}
+
+    <!-- new UI-->
+
+    <div class="page-content">
+        <div class="content">
+            <div class="main-box">
+                <div class="container">
+                    <div class="box-smartcares">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 mb-lg-n5 pt-lg-5">
+                                    <div class="main-box-reader">
+                                        <div class="box-reader">
+                                            <div class="form-group">
+                                                <div class="reader-text pb-5 text-left">
+                                                        <span class="text-dark">Enter your Device Serial Number : </span>
+                                                </div>
+                                                <div class="row">
+                                                            <div class="col-sm-12"><input id="SerialNo" @*value="AC4064"*@ class="form-control capital-alpha-numeric" placeholder="LR0E77QK" type="text"></div>
+                                                    <div class="col-sm-12">
+                                                            <div class="invalid-feedback-verify-serial-no text-left">
+                                                            <span id="errorSerialNo"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                                    <button type="submit" id="submit" class="btn-Retry btn-md text-white w-50 ml-4 btn-yes mt-5"><strong>Check</strong></button>
+                                                    <button type="submit" id="goToNextPage" class="btn-Retry btn-md text-white w-50 ml-4 btn-yes mt-5"><strong>Next</strong></button>
+                                                </div>
+
+                                                        <div class="row text-left mt-5">
+                                                            <a data-toggle="modal" data-target="#exampleModalCenter">
+        <span class=" text-left mt-5" style="font-size:30px;text-decoration-line: underline;">
+                        <object type="image/svg+xml" data="~/asset/images/question-circle-solid.svg" class="logo" style="width:25px;height:25px">
+      Kiwi Logo <!-- fallback image in CSS -->
+    </object> How to find Serial Number of Your Lenovo Product?</span></a>
+                                                    </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+      <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 80%;">
+        <div class="modal-content">
+          
+          <div class="modal-body">
+                     <img src="~/asset/images/Where-to-Find-Serial-Number.png" class="img-fluid" width="1000" alt="">
+          </div>
+          
+        </div>
+      </div>
+    </div>
+

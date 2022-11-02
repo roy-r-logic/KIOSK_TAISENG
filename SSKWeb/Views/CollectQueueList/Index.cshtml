@@ -1,0 +1,540 @@
+﻿@*
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+ViewData["Title"] = "Home";
+ViewBag.ShowFooter = false;
+ViewBag.ShowHeader = false;
+ViewBag.RedirectToHome = false;
+Layout = "~/Views/Shared/_QueueLayout.cshtml";
+}
+
+
+@section Styles{
+
+<style>
+    
+
+    div {
+        /* border: solid 1px black*/
+    }
+
+    .queueList {
+        overflow-y: scroll;
+        height: 100%;
+    }
+
+    .container-fluid {
+        height: 100%;
+        margin: 0;
+    }
+    .invalidFeedback{
+        color:red;
+    }
+</style>
+
+}
+
+
+@section Scripts{
+<script>
+    $(function() {
+        'use strict';
+        var isProcessing = false;
+        setInterval(function() {
+            getList();
+        }, 3000);
+         $("Info").hide();
+         $('#status').html("Not Case To Processing");
+         getDetail();
+        $(document).on("click", "#updateStatusToProcessing", function() {
+
+            $(function() {
+
+                'use strict';
+
+                (async function() {
+
+                    // $.LoadingOverlay("show");
+                    //Initial Data
+
+                    var refCode = $('#refCode');
+                    var RMAnumber = $('#RMAnumber');
+                    var phoneNumber = $('#phoneNumber');
+                    var issueTime = $('#issueTime');
+                            var startTime = $('#startTime');
+                    //if(RMAnumber != ""){
+                    //return false;
+                    //}
+                    //Clear Error Default
+               //     refCode.html("");
+               //     RMAnumber.html("");
+               //     phoneNumber.html("");
+               //     issueTime.html("");
+
+                        if(isProcessing == false){
+                           //Controller Call
+                        $.get("@Url.Action("UpdateCollectQueueListToProcessingAsync", "CollectQueueList")",
+                                function(data, status) {
+                                    console.log(data["data"]);
+                                    // var list = data["data"];
+                                    if (data["data"]) {
+                                        var detail = data["data"];
+                                        console.log(detail);
+                                        refCode.html(detail["refCode"]);
+                                        RMAnumber.html(detail["caseNo"]);
+                                        phoneNumber.html(detail["phoneNo"]);
+                                        issueTime.html(detail["issueTime"]);
+                                            startTime.html(detail["startTime"]);
+                                            $('#status').html("Case To Processing");
+                                        getList();
+                                        $("Info").show();
+                                            isProcessing=true;
+                                    }
+
+                                })
+                            .fail(function(data) {
+
+
+                            }).always(function() {
+                                //  $.LoadingOverlay("hide");
+                            });;
+                    }
+                    
+
+                })();
+
+            });
+        });
+
+
+        $(document).on("click", "#updateStatusToClosed", function() {
+
+            $(function() {
+
+                'use strict';
+
+                (async function() {
+
+                    // $.LoadingOverlay("show");
+                    //Initial Data
+
+                    var refCode = $('#refCode');
+                    var RMAnumber = $('#RMAnumber');
+                    var phoneNumber = $('#phoneNumber');
+                    var issueTime = $('#issueTime');
+                    var startTime = $('#startTime');
+                    //Controller Call
+                        $.get("@Url.Action("UpdateCollectQueueListStatusToCompletedAsync", "CollectQueueList")",
+                            function(data, status) {
+                                console.log(data["data"]);
+                                // var list = data["data"];
+                                if (data["data"]) {
+                                    // var detail = data["data"];
+                                    // console.log(detail);
+                                        $('#status').html("Not Case To Processing");
+                                            refCode.html("");
+                                    RMAnumber.html("");
+                                    phoneNumber.html("");
+                                    issueTime.html("");
+                                    startTime.html("");
+                                    //   getList();
+                                        $("Info").hide();
+                                            isProcessing=false;
+
+                                }
+
+                            })
+                        .fail(function(data) {
+
+
+                        }).always(function() {
+                            //  $.LoadingOverlay("hide");
+                        });;
+
+                })();
+
+            });
+        });
+
+
+            $(document).on("click", "#updateStatusToWaiting", function() {
+
+                $(function() {
+
+                    'use strict';
+
+                    (async function() {
+
+                        // $.LoadingOverlay("show");
+                        //Initial Data
+                        
+                        var refCode = $('#refCode');
+                        var RMAnumber = $('#RMAnumber');
+                        var phoneNumber = $('#phoneNumber');
+                        var issueTime = $('#issueTime');
+                        var startTime = $('#startTime');
+
+                        //Controller Call
+                            $.get("@Url.Action("UpdateCollectQueueListStatusToWaitingAsync", "CollectQueueList")",
+                                function(data, status) {
+                                    console.log(data["data"]);
+                                    // var list = data["data"];
+                                    if (data["data"]) {
+                                        // var detail = data["data"];
+                                        // console.log(detail);
+                                            $('#status').html("Not Case To Processing");
+                                                refCode.html("");
+                                        RMAnumber.html("");
+                                        phoneNumber.html("");
+                                        issueTime.html("");
+                                            startTime.html("");
+                                           getList();
+                                            $("Info").hide();
+                                                isProcessing=false;
+                                    }
+
+                                })
+                            .fail(function(data) {
+
+
+                            }).always(function() {
+                                //  $.LoadingOverlay("hide");
+                            });;
+
+                    })();
+
+                });
+            });
+
+
+
+   $(document).on("click", "#reportDowoload", function() {
+
+    var startDate = $('#startDate').val();
+    var endDate = $('#endDate').val();
+    var errorStartDate = $('#errorStartDate');
+    var errorEndDate = $('#errorEndDate');
+
+    console.log(startDate+"-"+endDate);
+    errorStartDate.html("");
+    errorEndDate.html("");
+
+    if(startDate != "" && endDate != ""){
+      if(new Date(endDate) > new Date(startDate)){
+
+      downloadReport(startDate,endDate);
+      }else{
+
+      errorEndDate.html("end date must small than start date");
+      }
+
+     }else{
+
+                 if(startDate == ""){
+                     errorStartDate.html("Please Input Start Date");
+                 }
+                     if(endDate == ""){
+                         errorEndDate.html("Please Input End Date");
+                     }
+       
+       
+      }
+
+      });
+    });
+
+
+    function getList() {
+
+        $.get("@Url.Action("CollectQueueList", "CollectQueueList")",
+                function(data, status) {
+                    var list = data["data"];
+                    
+                    $('.queueList').html("");
+                    for (var i = 0; i < list.length; i++) {
+                        
+                            $('.queueList').append('<a class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-center"><h4 class="mb-1">' + list[i]['refCode'] + '</h4> </div><div class="row"><div class="col-sm-6 text-right"><p class="mb-1"><b>RMA number:</b></p></div><div class="col-sm-6"><p class="mb-1">' + list[i]['caseNo'] + '</p></div></div><div class="row"><div class="col-sm-6 text-right""><p class="mb-1"><b>Phone number:</b> </p></div><div class="col-sm-6"><p class="mb-1">+65' + list[i]['phoneNo'] + '</p></div></div><div class="row"><div class="col-sm-6 text-right""><p class="mb-1"> <b>Device Sent In Date:</b></p></div><div class="col-sm-6"><p class="mb-1">' + list[i]['issueTime'] + '</p></div></div><div class="row"><div class="col-sm-6 text-right""><p class="mb-1"> <b>Start Time:</b></p></div><div class="col-sm-6"><p class="mb-1">' + list[i]['startTime'] + '</p></div></div></a>');
+                    }
+                })
+            .fail(function(data) {}).always(function() {});       
+    }
+
+        function getDetail(){
+                   var refCode = $('#refCode');
+                        var RMAnumber = $('#RMAnumber');
+                        var phoneNumber = $('#phoneNumber');
+                        var issueTime = $('#issueTime');
+                            var startTime = $('#startTime');
+                $.get("@Url.Action("GetCollectQueueListStatusProcessingAsync", "CollectQueueList")",
+                    function(data, status) {
+                         
+                        if (data["data"]) {
+                            var detail = data["data"];
+                            console.log(detail);
+                            refCode.html(detail["refCode"]);
+                            RMAnumber.html(detail["caseNo"]);
+                            phoneNumber.html(detail["phoneNo"]);
+                            issueTime.html(detail["issueTime"]);
+                            startTime.html(detail["startTime"]);
+                                $('#status').html("Case To Processing");
+                                $("Info").show();
+                                    isProcessing = true;
+                            getList();
+
+                        }
+                    })
+                .fail(function(data) {}).always(function() {});
+        }
+
+            function downloadReport(startDate,endDate){
+                  $.ajax({
+        type : 'GET',
+
+                url : 'https://localhost:5001/api/LenovoCollectQueueList/ReportDownload?StartTime='+startDate+'&EndTime='+endDate,
+           xhr: function () {
+                        var xhr = new XMLHttpRequest();
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 2) {
+                                if (xhr.status == 200) {
+                                    xhr.responseType = "blob";
+                                } else {
+                                    xhr.responseType = "text";
+                                }
+                            }
+                        };
+                        return xhr;
+                    },
+        success : function(response){
+                 
+                 console.log(response.headers);
+                var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                var downloadUrl = URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.href = downloadUrl;
+                            a.download ="report.xls";
+                document.body.appendChild(a);
+                a.click();
+        }
+    });
+            }
+</script>
+}
+
+
+    <div class="container-fluid">
+        <div class="row" style="border-bottom:solid 1px gray">
+            <div class="col">
+                <div class=" pb-2 mt-3 text-center">
+                    <h2>RLOGIC QUEUE SYSTEM - SmartCares Service Center</h2>
+
+                </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      Download Report
+    </button>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="col">
+                    <div class=" pb-2 text-center">
+                        <div class="d-flex w-100 justify-content-center">
+                            <h3 class="mb-1 mt-3" id="status">Processing Case</h3>
+                        </div>
+                    </div>
+                    <div style="margin-left:25%;margin-right:25%">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-center">
+                                <h4 class="mb-1" id="refCode"></h4>
+                            </div>
+                            <div id="Info">
+                                <div class="row">
+                                    <div class="col-sm-6 text-right">
+                                        <p class="mb-1"><b>RMA number:</b></p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1" id="RMAnumber"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 text-right"">
+                                    <p class=" mb-1"><b>Phone number:</b> </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-1" id="phoneNumber"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 text-right"">
+                                            <p class=" mb-1"> <b>Device Sent In Date:</b></p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1" id="issueTime"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 text-right"">
+                                        <p class=" mb-1"> <b>Start Time:</b></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="mb-1" id="startTime"></p>
+                            </div>
+
+                        </div>
+
+
+                    </a>
+                </div>
+            </div>
+
+            <div class="col" style="border-top:solid 1px gray;margin-top:20px">
+                <div class=" pb-5 text-center">
+                    <div class="d-flex w-100 justify-content-center">
+                        <h3 class="mb-1 mt-3">Action</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a href="#list" id="updateStatusToWaiting">
+
+                            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                                <div class="card-body">
+
+                                    <div class="d-flex w-100 justify-content-center" style="height:150px;width:150px">
+                                        <h1 class="mb-1 mt-5">Revert</h1>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#list" id="updateStatusToProcessing">
+
+                            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                                <div class="card-body">
+                                    <div class="d-flex w-100 justify-content-center" style="height:150px;width:150px">
+                                        <h1 class="mb-1 mt-5">Next</h1>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#list" id="updateStatusToClosed">
+
+                            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                                <div class="card-body">
+                                    <div class="d-flex w-100 justify-content-center" style="height:150px;width:150px">
+                                        <h1 class="mb-1 mt-5">Completed</h1>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="col-sm-4" style="border-left:solid 1px gray">
+            <div class="col">
+                <div class="  md-2 mt-2 text-center">
+                    <h5>Customers Queue</h5>
+                </div>
+
+                <div class="list-group queueList">
+                    <!--   <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-center">
+                                <h3 class="mb-1">0001</h3>
+                            </div>
+                            <div class="row">
+                                    <div class="col-sm-6 text-right">
+                                    <p class="mb-1"><b>RMA number:</b></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-1"></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 text-right"">
+                                        <p class="mb-1"><b>Phone number:</b> </p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-1"></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 text-right"">
+                                    <p class="mb-1"> <b>Issue time:</b></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="mb-1">01-06-2022 5:11</p>
+                                </div>
+                            </div>
+                        </a>-->
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Report Download</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-row">
+                <div class="col-md-6 mb-3">
+      <label for="validationCustom03">Start Date</label>
+      <input type="date" class="form-control" id="startDate"  required>
+      <span class="invalidFeedback" id="errorStartDate">
+       
+      </span>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationCustom03">End Date</label>
+      <input type="date" class="form-control" id="endDate"  required>
+      <span class="invalidFeedback" id="errorEndDate">
+        
+      </span>
+    </div>
+    </div>
+    
+                <button type="button" class="btn btn-primary" id="reportDowoload">
+      Download Excel File
+    </button>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+   

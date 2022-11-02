@@ -1,0 +1,75 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Agree To Reformat Page";
+}
+
+@section Styles{
+
+    @*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet" />*@
+
+        <!-- jQuery & jQuery UI + theme (required) -->
+    @*
+<link href="~/Assets/Plugins/keyboard/css/jquery-ui.min.css" rel="stylesheet">*@
+        <!-- keyboard widget css & script (required) -->
+
+        <link href="~/Assets/Plugins/keyboard/css/keyboard.css" rel="stylesheet">
+        <link href="~/Assets/Plugins/multiselect/multi-select.css" rel="stylesheet" />
+        <link href="~/Assets/Plugins/toastr/toastr.min.css" rel="stylesheet" />
+        <link href="~/Assets/Plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Assets/Templates/App/app.css" rel="stylesheet" />
+
+        <style>
+           .title{
+           font-size:80px
+           }
+        </style>
+}
+
+
+
+<!-- new UI-->
+
+<div class="page-content">
+    <div class="content">
+        @*<div class="main-box">*@
+        <div>
+            <div class="container">
+                <div class="box-smartcares">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card_reader-image">
+                                    <!--<figure class="text-center">
+
+                                        <img src="~/asset/images/register_icon.png" class="img-fluid" alt="">
+                                    </figure>-->
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-lg-n5 pt-lg-5">
+                                <div class="main-box-reader">
+                                    <div class="box-reader">
+                                            <h1 class="reader-text title"><strong>Remark</strong></h1>
+                                        <br />
+                                        <p class="reader-text text-left">I acknowledged that all my personal data and self-installed software will be lost during repair.
+ </p>
+                                        <div class="box-topup text-center mt-5 d-flex justify-content-center">
+                                           <!--<a onclick="window.location.href='@Url.Action("ThankYouPage", "Lenovo")';" class="btn-Retry w-50 mr-4 text-white"><strong>No</strong></a>--> 
+                                            <a onclick="window.location.href='@Url.Action("ConfirmationPage", "Lenovo")';" class="btn-Retry w-50  btn-yes text-white "><strong>Yes</strong></a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
